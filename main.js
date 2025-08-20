@@ -57,7 +57,8 @@ function menuCliente() {
     console.log("4. Cancelar reserva");
     console.log("5. Ver minhas reservas");
     console.log("6. Avaliar Estadia");
-    console.log("7. Logout")
+    console.log("7. Modificar Meus Dados");
+    console.log("8. Logout")
 
     const opcao = prompt(">> Escolha uma opção: ");
     switch (opcao) {
@@ -82,7 +83,7 @@ function menuCliente() {
             console.log("\n--- Minhas Reservas ---");
             console.table(meuHotel.verMinhasReservas());
             break;
-        case '7':
+        case '8':
             meuHotel.logout();
             break;
         case '6':
@@ -90,6 +91,18 @@ function menuCliente() {
             const nota = prompt("Qual a nota para sua estadia: ");
             const comentario = prompt("Faça um comentário sobre sua estadia: ");
             meuHotel.avaliarEstadia(idReserva, nota, comentario);
+            break;
+        case '7':
+            const newNome = prompt("Digite seu nome: ");
+            const newEmail = prompt("Digite seu email: ");
+            const newSenha = prompt("Digite sua nova senha: ");
+            const novosDados = {
+                nome: newNome,
+                email: newEmail,
+                senha: newSenha
+            };
+            meuHotel.modificarMeusDados(novosDados);
+            break;
         default:
             console.log("Opção inválida.");
             break;
@@ -105,7 +118,8 @@ function menuFuncionario() {
     console.log("4. Ver Lista de Clientes");
     console.log("5. Mudar status da reserva");
     console.log("6. Adicionar Quarto");
-    console.log("7. Logout");
+    console.log("7. Modificar meus dados");
+    console.log("8. Logout");
 
     const opcao = prompt(">> Escolha uma opção: ");
 
@@ -140,6 +154,17 @@ function menuFuncionario() {
             meuHotel.addQuarto(qtdCamas, precoPorNoite, qtdDisponivel, nome, descricao);
             break;
         case '7':
+            const newNome = prompt("Digite seu nome: ");
+            const newEmail = prompt("Digite seu email: ");
+            const newSenha = prompt("Digite sua nova senha: ");
+            const novosDados = {
+                nome: newNome,
+                email: newEmail,
+                senha: newSenha
+            };
+            meuHotel.modificarMeusDados(novosDados);
+            break;
+        case '8':
             meuHotel.logout();
             break;
         default:
