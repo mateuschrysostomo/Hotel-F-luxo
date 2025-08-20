@@ -34,50 +34,23 @@ class Sistema {
         console.log("Cadastro realizado com sucesso");
         return novoCliente;
     }
-    //Login
+
+
     login(email, senha) {
-        console.log("\n--- INÍCIO DO DEBUG LOGIN ---");
-        console.log(`Tentando fazer login com -> Email: "${email}" (Tipo: ${typeof email}) | Senha: "${senha}" (Tipo: ${typeof senha})`);
-        console.log(`Total de clientes no sistema: ${this.clientes.length}`);
-
-        // Mostra todos os clientes no array para inspeção visual
-        if (this.clientes.length > 0) {
-            console.log("Clientes no sistema:", this.clientes);
+        let usuario = this.funcionarios.find(f => f.email === email && f.senha === senha);
+        if (usuario) {
+            this.usuarioLogado = usuario;
+            return { tipo: 'funcionario', dados: usuario };
         }
 
-        // Procura na lista de clientes
-        const usuarioCliente = this.clientes.find(c => {
-            console.log(`\n... Comparando com Cliente ID ${c.id} (${c.nome})`);
-            console.log(`      Email: no sistema é "${c.email}", o digitado é "${email}". A comparação é: ${c.email === email}`);
-            console.log(`      Senha: no sistema é "${c.senha}", a digitada é "${senha}". A comparação é: ${c.senha === senha}`);
-            return c.email === email && c.senha === senha;
-        });
-
-        if (usuarioCliente) {
-            console.log("Cliente encontrado!");
-            console.log("--- FIM DO LOGIN ---\n");
-            this.usuarioLogado = usuarioCliente;
-            return { tipo: 'cliente', dados: usuarioCliente };
+        usuario = this.clientes.find(c => c.email === email && c.senha === senha);
+        if (usuario) {
+            this.usuarioLogado = usuario;
+            return { tipo: 'cliente', dados: usuario };
         }
-        // Se não achou cliente, procura funcionário (apenas por garantia)
-        const usuarioFuncionario = this.funcionarios.find(f => f.email === email && f.senha === senha);
-        if (usuarioFuncionario) {
-            console.log("Funcionário encontrado!");
-            console.log("--- FIM DO LOGIN ---\n");
-            this.usuarioLogado = usuarioFuncionario;
-            return { tipo: 'funcionario', dados: usuarioFuncionario };
 
-            usuario = this.clientes.find(c => c.email === email && c.senha === senha);
-            if (usuario) {
-                this.usuarioLogado = usuario;
-                return { tipo: 'cliente', dados: usuario };
-            }
-
-            console.log("Usuário não encontrado em nenhuma lista.");
-            console.log("--- FIM DO LOGIN ---\n");
-            this.usuarioLogado = null;
-            return null;
-        }
+        this.usuarioLogado = null;
+        return null;
     }
 
     logout() {
@@ -185,7 +158,6 @@ class Sistema {
 
         if (quarto) {
             quarto.qtdDisponivel++;
-            console.log('Um quarto do tipo "${quarto.nome}" foi devolvido ao estoque.');
             console.log(`Um quarto do tipo "${quarto.nome}" foi devolvido ao estoque.`);
         }
 
@@ -302,5 +274,4 @@ class Sistema {
         return true;
     }
 }
-
 module.exports = Sistema;

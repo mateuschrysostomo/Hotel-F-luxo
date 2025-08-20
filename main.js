@@ -4,10 +4,13 @@ const meuHotel = new Sistema();
 const Funcionario = require('./Funcionario.js');
 const Quartos = require('./Quartos.js');
 
+//Convencionalmente o cadastro do funcionário é feito pelo sistema, logo siga o código
+
 meuHotel.funcionarios.push(new Funcionario(meuHotel.proximoIdFuncionario++, 'admin', '000.000.000-00', 'admin@hotel.com', '123'));
 meuHotel.quartos.push(new Quartos(2, 150, 5, 'Padrão', 'Quarto com duas camas de solteiro e vista para a cidade.'));
 meuHotel.quartos.push(new Quartos(1, 250, 3, 'Luxo', 'Quarto com uma cama de casal, banheira e varanda.'));
 meuHotel.quartos.push(new Quartos(4, 350, 2, 'Familia', 'Dois quartos conjugados, ideal para famílias.'));
+meuHotel.funcionarios.push(new Funcionario(meuHotel.proximoIdFuncionario++, 'gerente', '000.000.000-00', 'gerente@hotel.com', 'gerente123'));
 
 // MENU 1: Para quando ninguém está logado
 function menuPrincipal() {
@@ -53,7 +56,8 @@ function menuCliente() {
     console.log("3. Fazer reserva");
     console.log("4. Cancelar reserva");
     console.log("5. Ver minhas reservas");
-    console.log("6. Logout");
+    console.log("6. Avaliar Estadia");
+    console.log("7. Logout")
 
     const opcao = prompt(">> Escolha uma opção: ");
     switch (opcao) {
@@ -78,9 +82,14 @@ function menuCliente() {
             console.log("\n--- Minhas Reservas ---");
             console.table(meuHotel.verMinhasReservas());
             break;
-        case '6':
+        case '7':
             meuHotel.logout();
             break;
+        case '6':
+            const idReserva = prompt("Digite o ID da sua Reserva: ");
+            const nota = prompt("Qual a nota para sua estadia: ");
+            const comentario = prompt("Faça um comentário sobre sua estadia: ");
+            meuHotel.avaliarEstadia(idReserva, nota, comentario);
         default:
             console.log("Opção inválida.");
             break;
